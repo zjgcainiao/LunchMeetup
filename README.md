@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 Ionic App Base
 =====================
 
@@ -27,4 +27,4 @@ Issues have been disabled on this repo, if you do find an issue or have a questi
 =======
 # LunchMeetup
 This is for having a login tool
->>>>>>> d003e6cb7171c8ab676f0595abe3647e8b883084
+
