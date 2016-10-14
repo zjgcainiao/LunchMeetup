@@ -71,14 +71,14 @@ angular.module('starter.controllers', [])
   // FACEBOOK LOGIN
   $scope.facebookLogin = function() {
 
-       var appID = "928219620607005"; // PUT YOUR FACEBOOK APP ID HERE
+       var appID = "1628077107489568"; // PUT YOUR FACEBOOK APP ID HERE
        var redirectURL = "http://login-oauth-146316.appspot.com/callback" ; // PUT YOUR APP CALLBACK URL HERE
 
        $cordovaOauth.facebook(appID, ["email"], {redirect_uri: redirectURL})
             .then(function(result){
                 var access_token = result.access_token;
 
-               $http.get("https://graph.facebook.com/v2.2/me",
+               $http.get("https://graph.facebook.com/v2.8/me",
                     { params: {access_token: access_token, fields: "name, email", format: "json" }})
                         .then(function(user) {
                         //     alert(JSON.stringify(user));
