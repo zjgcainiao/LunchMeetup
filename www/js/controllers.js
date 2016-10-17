@@ -151,7 +151,6 @@ angular.module('starter.controllers', [])
 })
 
 //HomepageController
-// CHAT CONTROLLER
 .controller('HomepageController', function($scope, $stateParams, IonicLogin) {
 
 })
