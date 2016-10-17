@@ -1,30 +1,33 @@
-<ion-view view-title="Welcome" hide-back-button="true" can-swipe-back="false">
+<ion-view view-title="Login to MeetMeUp" hide-back-button="true" can-swipe-back="false">
   <ion-content class="padding login-page">
 
   <div class="login-div">
 
-  <form name="loginForm">
-      <div class="list list-inset">
-              <label class="item item-input">
-                  <input required type="text" placeholder="Email" ng-model="data.email">
-              </label>
-              <label class="item item-input">
-                  <input required type="password" placeholder="Password" ng-model="data.password">
-              </label>
+    <form name="loginForm">
+      <div class="form-group">
+              <label for="exampleEnpueEmail1exampleInputEmail1">Email</label>
+                    <input required class ="form-control" type="email" id ="exampleInputEmail1" placeholder="Email" ng-model="data.email">
       </div>
-   </form>
-      <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="login()">Login</button>
- 	    <button class="button button-block button-dark" ng-disabled="!loginForm.$valid" ng-click="signUp()">Create Account</button>
+      <div class="form-group">
 
-    <div class="centerDiv">
-      <button class="button button-positive buttonFullwidth" ng-click="facebookLogin()">Facebook</button>
-      <button class="button button-calm buttonFullwidth" ng-click="twitterLogin()">Twitter</button>
-    </div>
+              <label class="control-label" for="exampleInputPassword1">Password</label>
+                    <input required class="form-control" type="password" id="exampleInputPassword1" placeholder="Password" ng-model="data.password">
+      </div>
 
-     <div class="centerDiv">
-      <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
-      <button class="button button-energized buttonFullwidth" ng-click="instagramLogin()">Instagram</button>
-    </div>
+            <button class="btn btn-block btn-primary"  ng-click="login()">Login</button>
+     </form>
+
+   	    <button class="button button-block button-dark"  ng-click="signUp()">Create Account</button>
+
+      <div class="centerDiv">
+        <button class="button button-positive buttonFullwidth" ng-click="facebookLogin()">Facebook</button>
+        <button class="button button-calm buttonFullwidth" ng-click="twitterLogin()">Twitter</button>
+      </div>
+
+       <div class="centerDiv">
+        <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
+        <button class="button button-energized buttonFullwidth" ng-click="linkedinLogin()">LinkedIn</button>
+      </div>
 
     </div>
 

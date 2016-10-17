@@ -72,13 +72,13 @@ angular.module('starter.controllers', [])
   $scope.facebookLogin = function() {
 
        var appID = "928219620607005"; // PUT YOUR FACEBOOK APP ID HERE
-       var redirectURL = "http://login-oauth-146316.appspot.com/callback" ; // PUT YOUR APP CALLBACK URL HERE
+       var redirectURL = "http://localhost/callback" ; // PUT YOUR APP CALLBACK URL HERE
 
        $cordovaOauth.facebook(appID, ["email"], {redirect_uri: redirectURL})
             .then(function(result){
                 var access_token = result.access_token;
 
-               $http.get("https://graph.facebook.com/v2.2/me",
+               $http.get("https://graph.facebook.com/v2.8/me",
                     { params: {access_token: access_token, fields: "name, email", format: "json" }})
                         .then(function(user) {
                         //     alert(JSON.stringify(user));
@@ -93,7 +93,7 @@ angular.module('starter.controllers', [])
     // TWITTER LOGIN
     $scope.twitterLogin = function(){
 
-          // YOUR TWITTER CALLBACK WILL HAVE TO BE HTTP://login-oauth-146316.appspot.com/CALLBACK FOR TESTING BUT
+          // YOUR TWITTER CALLBACK WILL HAVE TO BE HTTP://LOCALHOST/CALLBACK FOR TESTING BUT
           // IT NEEDS TO BE SET VIA TINYURL.COM
            var consumerKey = "fMNg8ecQmeOTHNFGgJKsGwYbw"; // PUT YOUR CONSUMER KEY HERE
            var consumerSecretKey = "cPOHMNSrDXLb1dXrVQP0e3CaeSlVGONzYgGq92gpPh38q9g51Q"; // PUT YOUR SECRET KEY HERE
@@ -118,7 +118,7 @@ angular.module('starter.controllers', [])
 
           // CREATE A PROJECT ON GOOGLE DEVELOPER CONSOLE AND PUT YOUR CLIENT ID HERE
           // GOOGLE OAUTH DOES NOT GIVE US EMAIL RIGHT AWAY SO WE HAVE TO MAKE 2 API CALLS
-          $cordovaOauth.google("584540832467-tv8i4a8utt7tk5aih3ej8a6gc65sjk87.apps.googleusercontent.com", ["email"], {redirect_uri: "http://login-oauth-146316.appspot.com/callback"}).then(function(result) {
+          $cordovaOauth.google("584540832467-tv8i4a8utt7tk5aih3ej8a6gc65sjk87.apps.googleusercontent.com", ["email"], {redirect_uri: "http://localhost/callback"}).then(function(result) {
                   //   alert("Response Object -> " + JSON.stringify(result));
 
                   $http.get("https://www.googleapis.com/plus/v1/people/me", // TO GET THE USER'S EMAIL

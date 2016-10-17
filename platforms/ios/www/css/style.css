@@ -10,7 +10,7 @@
 
 .login-page {
     background: url(../img/lunchmeeting.jpg);
-    background-size: auto;
+    background-size: cover;;
 }
 
 .login-div {

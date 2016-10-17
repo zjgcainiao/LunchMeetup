@@ -1,20 +1,23 @@
-<ion-view view-title="Join Us" hide-back-button="true" can-swipe-back="false">
+<ion-view view-title="Login to MeetMeUp" hide-back-button="true" can-swipe-back="false">
   <ion-content class="padding login-page">
 
   <div class="login-div">
 
-    <form class ="form-group" name="loginForm">
-        <div>
-              <label class="control-label" for="exampleEnpueEmail1exampleInputEmail1">Email</label>
-                    <input required type="email" id = "exampleInputEmail1"placeholder="Email" ng-model="data.email">
+    <form name="loginForm">
+      <div class="form-group">
+              <label for="exampleEnpueEmail1exampleInputEmail1">Email</label>
+                    <input required class ="form-control" type="email" id ="exampleInputEmail1" placeholder="Email" ng-model="data.email">
+      </div>
+      <div class="form-group">
 
               <label class="control-label" for="exampleInputPassword1">Password</label>
-                    <input required type="password" id="exampleInputPassword1" placeholder="Password" ng-model="data.password">
-        </div>
-            <button class="btn btn-block btn-primary" ng-disabled="!loginForm.$valid" ng-click="login()">Login</button>
+                    <input required class="form-control" type="password" id="exampleInputPassword1" placeholder="Password" ng-model="data.password">
+      </div>
+
+            <button class="btn btn-block btn-primary"  ng-click="login()">Login</button>
      </form>
 
-   	    <button class="button button-block button-dark" ng-disabled="!loginForm.$valid" ng-click="signUp()">Create Account</button>
+   	    <button class="button button-block button-dark"  ng-click="signUp()">Create Account</button>
 
       <div class="centerDiv">
         <button class="button button-positive buttonFullwidth" ng-click="facebookLogin()">Facebook</button>
