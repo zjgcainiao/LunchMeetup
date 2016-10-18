@@ -5,7 +5,7 @@ angular.module('starter.services', [])
   function login(email, password){
 
       $ionicLoading.show({
-              template: 'Creating Account...'
+              template: 'Logging into Account...'
           });
 
       $http.post("http://login-oauth-146316.appspot.com/login",

@@ -81,12 +81,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: 'templates/login.html',
         controller: 'IonicLogin'
     })
-
-    .state('home', {
-         url: '/home',
-          templateUrl: 'templates/home.html',
-          controller: 'HomepageController'
-      });
+    // 
+    // .state('home', {
+    //      url: '/home',
+    //       templateUrl: 'templates/home.html',
+    //       controller: 'HomepageController'
+    //   });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('splash');

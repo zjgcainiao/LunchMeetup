@@ -25,7 +25,7 @@ angular.module('starter.controllers', [])
         {
             var sesh = JSON.parse(window.localStorage['session']) ;
 
-              $http.post("http://login-oauth-146316.appspot.com//checkSession",
+              $http.post("http://login-oauth-146316.appspot.com/checkSession",
                 { params: { "session": JSON.stringify(sesh)}})
                   .success(function(response) {
                    if ( response == "error" || response == "LOGIN_FAIL" ){
@@ -68,30 +68,27 @@ angular.module('starter.controllers', [])
       IonicLogin.signUp($scope.data.email, $scope.data.password);
   }
 
+  // FACEBOOK LOGIN
+  $scope.facebookLogin = function() {
 
-    // FACEBOOK LOGIN
-    $scope.facebookLogin = function() {
+       var appID = "928219620607005"; // PUT YOUR FACEBOOK APP ID HERE
+       var redirectURL = "http://login-oauth-146316.appspot.com/callback" ; // PUT YOUR APP CALLBACK URL HERE
 
-         var appID = "1628077107489568"; // PUT YOUR FACEBOOK APP ID HERE
-         var redirectURL = "http://login-oauth-146316.appspot.com/callback" ; // PUT YOUR APP CALLBACK URL HERE
+       $cordovaOauth.facebook(appID, ["email"], {redirect_uri: redirectURL})
+            .then(function(result){
+                var access_token = result.access_token;
 
-         $cordovaOauth.facebook(appID, ["email"], {redirect_uri: redirectURL})
-              .then(function(result){
-                  var access_token = result.access_token;
-
-                 $http.get("https://graph.facebook.com/v2.8/me",
-                      { params: {access_token: access_token, fields: "name, email", format: "json" }})
-                          .then(function(user) {
-                          //     alert(JSON.stringify(user));
-                                // $scope.profileData=user.data;
-                               IonicLogin.socialLogin( user.data.email, user.data.id); // USING ID TO GENERATE A HASH PASSWORD
-                      })
-          },
-            function(error){
-                  console.log("Facebook Login Error: " + error);
-          });
-      }
-
+               $http.get("https://graph.facebook.com/v2.2/me",
+                    { params: {access_token: access_token, fields: "name, email", format: "json" }})
+                        .then(function(user) {
+                        //     alert(JSON.stringify(user));
+                             IonicLogin.socialLogin( user.data.email, user.data.id); // USING ID TO GENERATE A HASH PASSWORD
+                    })
+        },
+          function(error){
+                console.log("Facebook Login Error: " + error);
+        });
+    }
 
     // TWITTER LOGIN
     $scope.twitterLogin = function(){
@@ -147,16 +144,10 @@ angular.module('starter.controllers', [])
                      { params: {access_token: result.access_token }})
                         .then(function(user) {
                      //     alert(JSON.stringify(user));
-
                             IonicLogin.socialLogin( user.data.data.username, result.access_token); // USING ID TO GENERATE A HASH PASSWORD
                         });
           });
     }
-})
-
-//HomepageController
-.controller('HomepageController', function($scope, $stateParams, IonicLogin) {
-
 })
 
 // CHAT CONTROLLER

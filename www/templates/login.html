@@ -1,30 +1,26 @@
-<ion-view view-title="Log in to Us" hide-back-button="true" can-swipe-back="false">
+<ion-view view-title="Welcome" hide-back-button="true" can-swipe-back="false">
   <ion-content class="padding login-page">
 
-      <form class="login-div" name ="loginForm">
-            <label class="item item-input item-floating-label">
-              <span class="input-label dark">Username</span>
-                <input required type="text" placeholder="username" ng-model="data.username">
-            </label>
-            <label class="item item-input item-floating-label">
-              <span class="input-label">Email</span>
-                <input required type="email" placeholder="Email" ng-model="data.email">
-            </label>
+  <div class="login-div">
+
+  <form name="loginForm">
+      <div class="list">
               <label class="item item-input item-floating-label">
-                <span class="input-label">Paswword</span>
-                  <input required type="password" placeholder="Password" ng-model="data.password">
+                  <span class="input-label">Email </span><input required type="text" placeholder="Email" ng-model="data.email">
               </label>
-              <div class="item item-toggle">
-                  Remember me
-                  <label class="toggle toggle-assertive"><input type="checkbox">
-                      <div class="track">
-                          <div class="handle"></div>
-                      </div>
-                </label>
-              </div>
-      </form>
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="data.password">
+              </label>
+              Remember Me
+              <label class="toggle toggle-balanced">
+                 <input type="checkbox">
+                    <div class="track">
+                      <div class="handle"></div>
+                    </div>
+              </label>
+      </div>
 
-
+   </form>
       <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="login()">Login</button>
  	    <button class="button button-block button-dark" ng-disabled="!loginForm.$valid" ng-click="signUp()">Create Account</button>
 
