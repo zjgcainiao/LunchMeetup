@@ -9,11 +9,13 @@
 }
 
 .login-page {
-    background: url(../img/lunchmeeting.jpg);
-    background-size: cover;;
+    background: url(../img/background.jpg);
+    background-size: cover;
 }
 
 .login-div {
   opacity: 0.93 ;
-  padding: 30px;
+  padding: 20px;
+  color: dark;
+  border:none;
 }
