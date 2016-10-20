@@ -18,6 +18,9 @@
     <feature name="InAppBrowser">
         <param name="ios-package" value="CDVInAppBrowser" />
     </feature>
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
     <name>WeLogin</name>
     <description>
         An Innovative platform based on Ionic Framework and Cordova project.

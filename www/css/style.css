@@ -19,3 +19,13 @@
   color: dark;
   border:none;
 }
+
+
+.scroll {
+    height: 100%;
+}
+
+#map_canvas {
+    height: 100%;
+    width: 100%;
+}

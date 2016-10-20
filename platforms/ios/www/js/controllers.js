@@ -29,18 +29,18 @@ angular.module('starter.controllers', [])
                 { params: { "session": JSON.stringify(sesh)}})
                   .success(function(response) {
                    if ( response == "error" || response == "LOGIN_FAIL" ){
-                        $state.go('login');
+                        $state.go('home');
                    }
                    else{
                        $state.go('tab.dash');
                   }
                 })
                 .error(function(response) {
-                  $state.go('login');
+                  $state.go('home');
             });
         }
         else{
-           $state.go('login');
+           $state.go('home');
         }
      }
 })
@@ -71,14 +71,14 @@ angular.module('starter.controllers', [])
   // FACEBOOK LOGIN
   $scope.facebookLogin = function() {
 
-       var appID = "928219620607005"; // PUT YOUR FACEBOOK APP ID HERE
+       var appID = "1628077107489568"; // PUT YOUR FACEBOOK APP ID HERE
        var redirectURL = "http://login-oauth-146316.appspot.com/callback" ; // PUT YOUR APP CALLBACK URL HERE
 
        $cordovaOauth.facebook(appID, ["email"], {redirect_uri: redirectURL})
             .then(function(result){
                 var access_token = result.access_token;
 
-               $http.get("https://graph.facebook.com/v2.2/me",
+               $http.get("https://graph.facebook.com/v2.8/me",
                     { params: {access_token: access_token, fields: "name, email", format: "json" }})
                         .then(function(user) {
                         //     alert(JSON.stringify(user));
@@ -159,3 +159,71 @@ angular.module('starter.controllers', [])
 .controller('AccountCtrl', function($scope) {
 
 });
+
+// //MAP CONTROLLER
+// .controller('MapCtrl', function($scope, $cordovaGeolocation) {
+  //----Google Map Section---//
+  // Getting the map selector in DOM
+  // var div = document.getElementById("map_canvas");
+  //
+  // // Invoking Map using Google Map SDK v2 by dubcanada
+  // var map = google.maps.Map.getMap(div,{
+  //     'camera': {
+  //         'latLng': setPosition(-19.9178713, -43.9603117),
+  //         'zoom': 10
+  //     }
+  // });
+  //
+  // // Capturing event when Map load are ready.
+  // map.addEventListener(google.maps.event.MAP_READY, function(){
+  //
+  //     // Defining markers for demo
+  //     var markers = [{
+  //         position: setPosition(-19.9178713, -43.9603117),
+  //         title: "Marker 1"
+  //     }, {
+  //         position: setPosition(-19.8363826, -43.9787167),
+  //         title: "Marker 2"
+  //     }];
+  //
+  //     // Bind markers
+  //     for (var i = 0; i < markers.length; i++) {
+  //         map.addMarker({
+  //             'marker': markers[i],
+  //             'position': markers[i].position
+  //         }, function(marker) {
+  //
+  //             // Defining event for each marker
+  //             marker.on("click", function() {
+  //                 alert(marker.get('marker').title);
+  //             });
+  //
+  //         });
+  //     }
+  // });
+  //
+  // // Function that return a LatLng Object to Map
+  // function setPosition(lat, lng) {
+  //     return new plugin.google.maps.LatLng(lat, lng);
+  // }
+//----
+
+  // var options = {timeout: 10000, enableHighAccuracy: true};
+  //
+  // $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+  //
+  //   var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  //
+  //   var mapOptions = {
+  //     center: latLng,
+  //     zoom: 15,
+  //     mapTypeId: google.maps.MapTypeId.ROADMAP
+  //   };
+  //
+  //   $scope.map_canvas = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+  //
+  // }, function(error){
+  //   console.log("Could not get location");
+  // });
+
+// };

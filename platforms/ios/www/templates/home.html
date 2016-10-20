@@ -1,14 +1,13 @@
-<ion-view view-tite="MeetMeUp" hide-back-button="true" can-swipe-back="false" class="login-page">
+<ion-view view-tite="MeetMeUp" hide-back-button="true" can-swipe-back="false" style="background:url(../img/lunchmeeting.jpg);">
   <ion-content>
   </ion-content>
-<ion-footer-bar >
-  <div class="col-sm-6">
-    <button class="btn btn-primary" href="/login"> Sign In </button>
-  </div>
+<ion-footer-bar>
 
-  <div class="col-sm-6">
-    <button class="btn btn-primary" href="#/login"> Sign Up </button>
-  </div>
+  <ion-tabs class="bar">
+    <button class="button ion-log-in" ui-sref="login"> Sign In </button>
+    <button  class="button ion-person-add" href="/login"> Sign Up </button>
+  </ion-tabs>
+
 </ion-footer-bar>
 
 </ion-view>

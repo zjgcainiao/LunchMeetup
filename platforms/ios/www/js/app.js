@@ -20,6 +20,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
   });
 })
 
@@ -81,12 +83,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: 'templates/login.html',
         controller: 'IonicLogin'
     })
-    // 
-    // .state('home', {
-    //      url: '/home',
-    //       templateUrl: 'templates/home.html',
-    //       controller: 'HomepageController'
-    //   });
+
+    .state('maps', {
+        url: '/maps',
+        templateUrl: 'templates/tab-maps.html'
+
+    })
+
+    .state('home', {
+         url: '/home',
+          templateUrl: 'templates/home.html'
+
+      })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('splash');

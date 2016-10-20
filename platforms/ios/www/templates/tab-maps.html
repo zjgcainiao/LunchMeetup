@@ -1,8 +1,14 @@
-<ion-view view-title="Settings" cache-value="true">
-  <ion-content class='padding'>
- <button class="button icon icon-right ion-chevron-right" ui-sref="maps">See Maps</button>
+<ion-view view-title="Maps" cache-value="true">
 
-    <div class="list card">
+        <ion-header-bar class="bar-stable">
+          <h1 class="title">Maps</h1>
+        </ion-header-bar>
+        <ion-content>
+            <div id="map_canvas"></div>
+        </ion-content>
+
+
+    <!-- <div class="list card">
         <div class="item item-avatar">
             <img ng-src="{{profileData.picture.data.url}}">
             <h2>{{profileData.name}}</h2>
@@ -20,6 +26,6 @@
             <i class="icon ion-heart"></i>
             {{profileData.relationship_status}}
         </a>
-    </div>
-  </ion-content>
+    </div> -->
+
 </ion-view>
