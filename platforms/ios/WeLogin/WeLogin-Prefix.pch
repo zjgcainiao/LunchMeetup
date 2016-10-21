@@ -17,7 +17,7 @@
  under the License.
  */
 //
-// Prefix header for all source files of the 'IonicLogin' target in the 'IonicLogin' project
+// Prefix header for all source files of the 'WeLogin' target in the 'WeLogin' project
 //
 
 #ifdef __OBJC__

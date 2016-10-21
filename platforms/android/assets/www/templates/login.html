@@ -1,0 +1,45 @@
+<ion-view view-title="Welcome" hide-back-button="false" can-swipe-back="true">
+  <ion-content class="padding login-page">
+
+  <div class="login-div">
+
+  <form name="loginForm" style="border:none;">
+      <div class="list">
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Email </span><input required type="text" placeholder="Email" ng-model="data.email">
+              </label>
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="data.password" ng-minlength="3">
+              </label>
+
+            <li class="item item-toggle">  Remember Me
+                  <label class="toggle toggle-balanced">
+                     <input type="checkbox">
+                        <div class="track">
+                          <div class="handle"></div>
+                        </div>
+                  </label>
+            </li>
+      </div>
+
+   </form>
+      <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="login()">Login</button>
+ 	    <button class="button button-block button-dark" ng-disabled="!loginForm.$valid" ng-click="signUp()">Create Account</button>
+
+    <div class="centerDiv">
+      <button class="button button-positive buttonFullwidth" ng-click="facebookLogin()">Facebook</button>
+      <!-- <button class="button button-calm buttonFullwidth" ng-click="twitterLogin()">Twitter</button> -->
+      <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
+
+    </div>
+
+     <div class="centerDiv">
+      <!-- <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
+      <button class="button button-energized buttonFullwidth" ng-click="instagramLogin()">Instagram</button> -->
+      <button class="button button-assertive buttonFullwidth" ui-sref="home">Homepage</button>
+    </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>

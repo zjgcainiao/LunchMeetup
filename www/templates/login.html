@@ -1,4 +1,4 @@
-<ion-view view-title="Welcome" hide-back-button="false" can-swipe-back="true">
+<ion-view view-title="Please Sign in" hide-back-button="false" can-swipe-back="true">
   <ion-content class="padding login-page">
 
   <div class="login-div">
@@ -12,14 +12,14 @@
                   <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="data.password" ng-minlength="3">
               </label>
 
-            <li class="item item-toggle">  Remember Me
-                  <label class="toggle toggle-balanced">
+            <ion-toggle class="item item-toggle" toggle-class="toggle-balanced" ng-model="userNameStored">  Remember Me
+                  <!-- <label class="toggle toggle-balanced">
                      <input type="checkbox">
                         <div class="track">
                           <div class="handle"></div>
                         </div>
-                  </label>
-            </li>
+                  </label> -->
+            </ion-toggle>
       </div>
 
    </form>
@@ -36,7 +36,7 @@
      <div class="centerDiv">
       <!-- <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
       <button class="button button-energized buttonFullwidth" ng-click="instagramLogin()">Instagram</button> -->
-      <button class="button button-assertive buttonFullwidth" ui-sref="home">Homepage</button>
+      <button class="button button-royal buttonFullwidth" ui-sref="maps">Maps</button>
     </div>
 
     </div>

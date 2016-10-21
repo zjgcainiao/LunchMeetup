@@ -86,7 +86,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     .state('maps', {
         url: '/maps',
-        templateUrl: 'templates/tab-maps.html'
+        templateUrl: 'templates/maps.html',
+        controller: 'MapCtrl'
 
     })
 
