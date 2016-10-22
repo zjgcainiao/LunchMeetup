@@ -3,6 +3,11 @@
 .centerDiv{
   display: inline-block; width:100%; margin: 0 auto; padding: 6px; text-align: center;
 }
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .buttonFullwidth{
   width: 46% ;
