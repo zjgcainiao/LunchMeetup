@@ -33,7 +33,7 @@
       Stephen Wang
     </author>
     <content src="index.html" />
-    <access origin="http://maps.google.com/" />
+    <access origin="*" />
     <allow-intent href="https://maps.googleapis.com" />
     <icon height="57" src="resources/ios/icon/icon.png" width="57" />
     <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />

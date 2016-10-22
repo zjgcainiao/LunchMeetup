@@ -30,6 +30,14 @@ module.exports = [
         "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
         "pluginId": "cordova-plugin-geolocation",
         "runs": true
+    },
+    {
+        "id": "plugin.google.maps.phonegap-googlemaps-plugin",
+        "file": "plugins/plugin.google.maps/www/googlemaps-cdv-plugin.js",
+        "pluginId": "plugin.google.maps",
+        "clobbers": [
+            "plugin.google.maps"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -39,7 +47,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.0",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-compat": "1.0.0",
-    "cordova-plugin-geolocation": "2.4.0"
+    "cordova-plugin-geolocation": "2.4.0",
+    "plugin.google.maps": "1.3.9"
 };
 // BOTTOM OF METADATA
 });

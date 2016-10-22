@@ -9,7 +9,6 @@
     </author>
   <content src="index.html"/>
   <access origin="*"/>
-  <!-- important for Google Map to load-->
   <allow-intent href="https://maps.googleapis.com"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>

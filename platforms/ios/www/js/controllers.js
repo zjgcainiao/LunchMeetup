@@ -163,12 +163,12 @@ angular.module('starter.controllers', [])
 // MAP CONTROLLER
 .controller('MapCtrl', function($scope, $ionicLoading, $compile, $cordovaGeolocation) {
     function initialize() {
-      var myLatlng = new google.maps.LatLng(34.0953,118.1270);
+      var myLatlng = new google.maps.LatLng(34.0953,-118.1270); //location of Alhambra
       var mapOptions = {
         center: myLatlng,
         zoom: 13,
-        // disableDefaultUI: true,// DISABLE MAP TYPE
-        // scrollwheel: false,
+        disableDefaultUI: true,// DISABLE MAP TYPE
+        scrollwheel: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
@@ -176,12 +176,15 @@ angular.module('starter.controllers', [])
 
       var input = /** @type {HTMLInputElement} */ (
       document.getElementById('pac-input'));
+
+    //Create the search box and link it to the UI element
+    var searchBox = new google.maps.places.SearchBox(input);
     // Create the autocomplete helper, and associate it with
     // an HTML text input box.
       // var autocomplete = new google.maps.places.Autocomplete(input);
       // autocomplete.bindTo('bounds', map);
-      // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-      // var infowindow = new google.maps.InfoWindow();
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      var infowindow = new google.maps.InfoWindow();
       var marker = new google.maps.Marker({
         position: myLatlng,
         map: map
@@ -189,57 +192,113 @@ angular.module('starter.controllers', [])
       google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map, marker);
       });
+      //Bias the SearchBox result towards current map's viewport
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      var markers = [];
+      // Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(20, 20),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          // Create a marker for each place.
+          markers.push(new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.fitBounds(bounds);
+      });
+
 
       $scope.map = map;
       // Get the full place details when the user selects a place from the
       // list of suggestions.
-      google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        infowindow.close();
-        var place = autocomplete.getPlace();
-        if (!place.geometry) {
-        return;
-        }
-        if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-        } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
-        }
-        // Set the position of the marker using the place ID and location.
-        marker.setPlace( /** @type {!google.maps.Place} */ ({
-        placeId: place.place_id,
-        location: place.geometry.location
-        }));
-        marker.setVisible(true);
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-        'Place ID: ' + place.place_id + '<br>' +
-        place.formatted_address + '</div>');
-        infowindow.open(map, marker);
-      });
+
+      // google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      //   infowindow.close();
+      //   var place = autocomplete.getPlace();
+      //   if (!place.geometry) {
+      //   return;
+      //   }
+      //   if (place.geometry.viewport) {
+      //   map.fitBounds(place.geometry.viewport);
+      //   } else {
+      //   map.setCenter(place.geometry.location);
+      //   map.setZoom(17);
+      //   }
+      //   // Set the position of the marker using the place ID and location.
+      //   marker.setPlace( /** @type {!google.maps.Place} */ ({
+      //   placeId: place.place_id,
+      //   location: place.geometry.location
+      //   }));
+      //   marker.setVisible(true);
+      //   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+      //   'Place ID: ' + place.place_id + '<br>' +
+      //   place.formatted_address + '</div>');
+      //   infowindow.open(map, marker);
+      // });
+
 
     }
   // Run the initialize function when the window has finished loading.
-  // google.maps.event.addDomListener(document.getElementById('map'), 'load', initialize);
-  //
-  // $scope.centerOnMe = function() {
-  //   if(!$scope.map) {
-  //     return;
-  //   }
-  //
-  //   $scope.loading = $ionicLoading.show({
-  //     content: 'Getting current location...',
-  //     showBackdrop: false
-  //   });
-  //
-  //   navigator.geolocation.getCurrentPosition(function(pos) {
-  //     $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-  //     $scope.loading.hide();
-  //   }, function(error) {
-  //     alert('Unable to get location: ' + error.message);
-  //   });
-  // };
-  //
-  // $scope.clickTest = function() {
-  //   alert('Example of infowindow with ng-click')
-  // };
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  $scope.centerOnMe = function() {
+    if(!$scope.map) {
+      return;
+    }
+
+    $scope.loading = $ionicLoading.show({
+      content: 'Getting current location...',
+      showBackdrop: false
+    });
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      $scope.loading.hide();
+    }, function(error) {
+      alert('Unable to get location: ' + error.message);
+    });
+  };
+
+  $scope.clickTest = function() {
+    alert('Example of infowindow with ng-click')
+  };
 });
