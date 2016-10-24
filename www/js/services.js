@@ -1,5 +1,88 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['firebase'])
+.factory("Auth", ["$firebaseAuth", "$rootScope",
+function ($firebaseAuth, $rootScope) {
+        var ref = new Firebase(firebaseDatabseUrl);
+        return $firebaseAuth(ref);
+}])
 
+.factory('Chats', function ($firebase, Friends) {
+
+var selectedFriendId;
+
+var ref = new Firebase(firebaseDatabseUrl);
+var chats;
+
+return {
+    all: function () {
+        return chats;
+    },
+    remove: function (chat) {
+        chats.$remove(chat).then(function (ref) {
+            ref.key() === chat.$id; // true item has been removed
+        });
+    },
+    get: function (friendId) {
+        for (var i = 0; i < chats.length; i++) {
+            if (chats[i].id === parseInt(chatId)) {
+                return chats[i];
+            }
+        }
+        return null;
+    },
+    getSelectedFriendName: function () {
+        var selectedFriend;
+        if (selectedFriendId && selectedFriendId != null) {
+            selectedFriend = Friends.get(selectedFriendId);
+            if (selectedFriend)
+                return selectedFriend.name;
+            else
+                return null;
+        } else
+            return null;
+    },
+    selectFriend: function (roomId) {
+        console.log("selecting the friend with id: " + friendId);
+        selectedFriendId = friendId;
+        if (!isNaN(friendId)) {
+            chats = $firebase(ref.child('friends').child(selectedFriendsId).child('chats')).$asArray();
+        }
+    },
+    send: function (from, message) {
+        console.log("sending message from :" + from.displayName + " & message is " + message);
+        if (from && message) {
+            var chatMessage = {
+                from: from.displayName,
+                message: message,
+                createdAt: Firebase.ServerValue.TIMESTAMP
+            };
+            chats.$add(chatMessage).then(function (data) {
+                console.log("message added");
+            });
+        }
+    }
+}
+})
+
+/**
+* Simple Service which returns Rooms collection as Array from Salesforce & binds to the Scope in Controller
+*/
+.factory('Friends', function ($firebase) {
+// Might use a resource here that returns a JSON array
+var ref = new Firebase(firebaseDatabseUrl);
+var friends= $firebase(ref.child('friends')).$asArray();
+
+return {
+    all: function () {
+        return friends;
+    },
+    get: function (friendId) {
+        // Simple index lookup
+        return rooms.$getRecord(friendId);
+    }
+}
+});
+
+//OLD----using Server Side NodeJs to login and logout users
 .factory('IonicLogin', function( $http, $state, $ionicPopup, $ionicLoading) {
 
   function login(email, password){

@@ -2,14 +2,23 @@ angular.module('starter.controllers', [])
 
 
 // HOME PAGE CONTROLLER
-.controller('DashCtrl', function($scope, IonicLogin) {
+.controller('DashCtrl', function($scope, IonicLogin,Friends, Chats, $state) {
 
   $scope.$on('$ionicView.enter', function(e) {
       $scope.session = JSON.parse( window.localStorage['session']) ; // read the session information
+
   });
 
    $scope.logout = function(){
        IonicLogin.logout($scope.session.email);
+  }
+  //console.log("Rooms Controller initialized");
+  $scope.friends = Friends.all();
+
+  $scope.openChatWithFriend = function (friendId) {
+      $state.go('tab.dash', {
+          friendId: friendId
+      });
   }
 })
 
@@ -46,7 +55,15 @@ angular.module('starter.controllers', [])
 })
 
 // LOGIN PAGE CONTROLLER
-.controller('IonicLogin', function($scope, IonicLogin, $ionicLoading, $cordovaOauth, $http) {
+.controller('IonicLogin', function($scope, IonicLogin, $ionicLoading, $ionicModal,$state,$firebase,$ionicLoading,$rootscope, $cordovaOauth, $http) {
+
+  var ref = new Firebase($scope.firebaseDatabseUrl);
+  var auth = $firebaseAuth(ref);
+  $ionicModal.fromTemplateUrl('templates/signup.html', {
+      scope: $scope
+  }).then(function (modal) {
+      $scope.modal = modal;
+  });
 
   // REMOVE THE USER LOGIN INFORMATION WHEN RETURNING TO LOGIN SCREEN
   $scope.$on('$ionicView.enter', function(e) {
@@ -59,13 +76,66 @@ angular.module('starter.controllers', [])
   }
 
   // LOGIN FUNCTION
-  $scope.login = function(){
-       IonicLogin.login($scope.data.email, $scope.data.password);
+  // $scope.login = function(){
+  //      IonicLogin.login($scope.data.email, $scope.data.password);
+  // }
+  //New Login function
+  $scope.login = function (userProfile) {
+      if (user && userProfile.email && userProfile.password) {
+          $ionicLoading.show({
+              template: 'Signing In...'
+          });
+          auth.$authWithPassword({
+              email: userProfile.email,
+              password: userProfile.password
+          }).then(function (authData) {
+              console.log("Logged in as:" + authData.uid);
+              ref.child("users").child(authData.uid).once('value', function (snapshot) {
+                  var val = snapshot.val();
+                  // To Update AngularJS $scope either use $apply or $timeout
+                  $scope.$apply(function () {
+                      $rootScope.displayName = val;
+                  });
+              });
+              $ionicLoading.hide();
+              $state.go('tab.dash');
+          }).catch(function (error) {
+              alert("Authentication failed:" + error.message);
+              $ionicLoading.hide();
+          });
+      } else
+          alert("Please enter email and password both");
   }
 
    // SIGNUP FUNCTION
-   $scope.signUp = function(){
-      IonicLogin.signUp($scope.data.email, $scope.data.password);
+  //  $scope.signUp = function(){
+  //     IonicLogin.signUp($scope.data.email, $scope.data.password);
+  // }
+  //New SignUp function
+  $scope.signUp = function (userProfile) {
+      console.log("Create User Function called");
+      if (user && userProfile.email && userProfile.password && userProfile.displayname) {
+          $ionicLoading.show({
+              template: 'Signing Up...'
+          });
+
+          auth.$createUser({
+              email: userProfile.email,
+              password: userProfile.password
+          }).then(function (userData) {
+              alert("User created successfully!");
+              ref.child("users").child(userData.uid).set({
+                  email: userProfile.email,
+                  displayName: userProfile.displayname
+              });
+              $ionicLoading.hide();
+              $scope.modal.hide();
+          }).catch(function (error) {
+              alert("Error: " + error);
+              $ionicLoading.hide();
+          });
+      } else
+          alert("Please fill all details");
   }
 
   // FACEBOOK LOGIN
@@ -151,8 +221,32 @@ angular.module('starter.controllers', [])
 })
 
 // CHAT CONTROLLER
-.controller('ChatsCtrl', function($scope, $stateParams, IonicLogin) {
+.controller('ChatsCtrl', function($scope, Chats, $state, $stateParams, IonicLogin) {
+  //console.log("Chat Controller initialized");
 
+  $scope.IM = {
+      textMessage: ""
+  };
+
+  Chats.selectRoom($state.params.roomId);
+
+  var roomName = Chats.getSelectedRoomName();
+
+  // Fetching Chat Records only if a Room is Selected
+  if (roomName) {
+      $scope.roomName = " - " + roomName;
+      $scope.chats = Chats.all();
+  }
+
+  $scope.sendMessage = function (msg) {
+      console.log(msg);
+      Chats.send($scope.displayName, msg);
+      $scope.IM.textMessage = "";
+  }
+
+  $scope.remove = function (chat) {
+      Chats.remove(chat);
+  }
 })
 
 // ACCOUNT SETTINGS CONTROLLER
@@ -278,7 +372,11 @@ angular.module('starter.controllers', [])
 
     }
   // Run the initialize function when the window has finished loading.
-  google.maps.event.addDomListener(window, 'load', initialize);
+  //maps.html is part of the view. we have to wait until the page is fully loaded.
+  //jquery is thus added to ensure we could async load the map
+    $(window).ready(initialize);
+    $(window).on('page:load',initialize);
+    // google.maps.event.addDomListener(window, 'load', initialize);
 
   $scope.centerOnMe = function() {
     if(!$scope.map) {

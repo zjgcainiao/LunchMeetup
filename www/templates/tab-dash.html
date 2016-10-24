@@ -1,10 +1,20 @@
-<ion-view view-title="LunchMeUp">
+<ion-view view-title="Friends">
   <ion-content class="padding">
 
   <div class="centerDiv">
      <p>Welcome, {{session.email}}</p>
      <button class="button button-block button-positive" ng-click="logout()">Logout</button>
   </div>
-
+  <ion-list ng-show="friends">
+      <ion-item class="item-icon-left" ng-repeat="friend in friends" type="item-text-wrap" ng-click="openChatWithFriend(friend.id)">
+          <i class="icon {{friend.icon}}"></i>
+          <h2>{{friend.name}}</h2>
+      </ion-item>
+  </ion-list>
+  <ion-list ng-hide="friends.length">
+      <ion-item class="textCenter">
+          <i class="icon ion-loading-c"></i> Loading Friends
+      </ion-item>
+  </ion-list>
   </ion-content>
 </ion-view>

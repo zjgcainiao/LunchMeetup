@@ -1,0 +1,42 @@
+<!-- sign up page is a modal -->
+<ion-modal-view view-title="Sign Up" hide-back-button="false" can-swipe-back="true">
+  <ion-content class="padding login-page">
+  <div class="login-div">
+
+  <form name="signUpForm" style="border:none;">
+      <div class="list">
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Display Name </span><input required type="text" placeholder="Display Name" ng-model="userProfile.displayname">
+              </label>
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Email </span><input required type="text" placeholder="Email" ng-model="userProfile.email">
+              </label>
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Password</span><input required type="password1" placeholder="Password" ng-model="userProfile.password" ng-minlength="3">
+              </label>
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Password</span><input required type="password2" placeholder="Password"  ng-minlength="3">
+              </label>
+      </div>
+
+   </form>
+      <!-- <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="login()">Login</button> -->
+ 	    <button class="button button-block button-dark" ng-disabled="(!signUpForm.$valid) || (password != password2)" ng-click="signUp()">Create Account</button>
+
+    <div class="centerDiv">
+      <button class="button button-positive buttonFullwidth" ng-click="facebookLogin()">Facebook</button>
+      <!-- <button class="button button-calm buttonFullwidth" ng-click="twitterLogin()">Twitter</button> -->
+      <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
+
+    </div>
+
+     <div class="centerDiv">
+      <!-- <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
+      <button class="button button-energized buttonFullwidth" ng-click="instagramLogin()">Instagram</button> -->
+      <button class="button button-royal buttonFullwidth" ui-sref="maps">Maps</button>
+    </div>
+
+    </div>
+
+  </ion-content>
+</ion-modal-view>
