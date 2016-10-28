@@ -1,15 +1,20 @@
 <ion-view view-title="Please Sign in" hide-back-button="false" can-swipe-back="true">
   <ion-content class="padding login-page">
-
+    <div class="list">
+        <img src="img/logo1.png" class="logo">
+        <div class="logoText">
+            myChat
+        </div>
+    </div>
   <div class="login-div">
 
     <form name="loginForm" style="border:none;">
         <div class="list">
                 <label class="item item-input item-floating-label">
-                    <span class="input-label">Email </span><input required type="text" placeholder="Email" ng-model="userProfile.email">
+                    <span class="input-label">Email </span><input required type="text" placeholder="Email" ng-model="user.email">
                 </label>
                 <label class="item item-input item-floating-label">
-                    <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="userProfile.password" ng-minlength="3">
+                    <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="user.password" ng-minlength="3">
                 </label>
 
               <ion-toggle class="item item-toggle" toggle-class="toggle-balanced" ng-model="userNameStored">  Remember Me
@@ -23,7 +28,12 @@
         </div>
 
      </form>
-        <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="login()">Login</button>
+        <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="login(user)">Login</button>
+        <div class="list" style="text-align:center">
+            <button ng-click="modal.show()" class="button button-small button-outline icon-left ion-person-add button-positive">
+                Create New Account
+            </button>
+        </div>
    	    <!-- <button class="button button-block button-dark" ng-disabled="!loginForm.$valid" ng-click="signUp()">Create Account</button>
 
       <div class="centerDiv">

@@ -2,16 +2,16 @@ angular.module('starter.controllers', [])
 
 
 // HOME PAGE CONTROLLER
-.controller('DashCtrl', function($scope, IonicLogin,Friends, Chats, $state) {
+.controller('DashCtrl', function($scope, IonicLogin, Friends, Chats, $state) {
 
-  $scope.$on('$ionicView.enter', function(e) {
-      $scope.session = JSON.parse( window.localStorage['session']) ; // read the session information
-
-  });
-
-   $scope.logout = function(){
-       IonicLogin.logout($scope.session.email);
-  }
+  // $scope.$on('$ionicView.enter', function(e) {
+  //     $scope.session = JSON.parse( window.localStorage['session']) ; // read the session information
+  //
+  // });
+  //
+  //  $scope.logout = function(){
+  //      IonicLogin.logout($scope.session.email);
+  // }
   //console.log("Rooms Controller initialized");
   $scope.friends = Friends.all();
 
@@ -79,15 +79,15 @@ angular.module('starter.controllers', [])
   // $scope.login = function(){
   //      IonicLogin.login($scope.data.email, $scope.data.password);
   // }
-  //New Login function
-  $scope.login = function (userProfile) {
-      if (user && userProfile.email && userProfile.password) {
+  //New signup function
+  $scope.login = function (user) {
+      if (user && user.email && user.password) {
           $ionicLoading.show({
               template: 'Signing In...'
           });
           auth.$authWithPassword({
-              email: userProfile.email,
-              password: userProfile.password
+              email: user.email,
+              password: user.password
           }).then(function (authData) {
               console.log("Logged in as:" + authData.uid);
               ref.child("users").child(authData.uid).once('value', function (snapshot) {
@@ -112,21 +112,21 @@ angular.module('starter.controllers', [])
   //     IonicLogin.signUp($scope.data.email, $scope.data.password);
   // }
   //New SignUp function
-  $scope.signUp = function (userProfile) {
+  $scope.signUp = function (user) {
       console.log("Create User Function called");
-      if (user && userProfile.email && userProfile.password && userProfile.displayname) {
+      if (user && user.email && user.password && user.displayname) {
           $ionicLoading.show({
               template: 'Signing Up...'
           });
 
           auth.$createUser({
-              email: userProfile.email,
-              password: userProfile.password
+              email: user.email,
+              password: user.password
           }).then(function (userData) {
               alert("User created successfully!");
               ref.child("users").child(userData.uid).set({
-                  email: userProfile.email,
-                  displayName: userProfile.displayname
+                  email: user.email,
+                  displayName: user.displayname
               });
               $ionicLoading.hide();
               $scope.modal.hide();
@@ -218,7 +218,7 @@ angular.module('starter.controllers', [])
                         });
           });
     }
-})
+})  // -- End of IonicLogin Congroller
 
 // CHAT CONTROLLER
 .controller('ChatsCtrl', function($scope, Chats, $state, $stateParams, IonicLogin) {

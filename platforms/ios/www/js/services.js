@@ -1,4 +1,5 @@
 angular.module('starter.services', ['firebase'])
+
 .factory("Auth", ["$firebaseAuth", "$rootScope",
 function ($firebaseAuth, $rootScope) {
         var ref = new Firebase(firebaseDatabseUrl);
@@ -60,7 +61,7 @@ return {
             });
         }
     }
-}
+  }
 })
 
 /**
@@ -69,7 +70,7 @@ return {
 .factory('Friends', function ($firebase) {
 // Might use a resource here that returns a JSON array
 var ref = new Firebase(firebaseDatabseUrl);
-var friends= $firebase(ref.child('rooms')).$asArray();
+var friends= $firebase(ref.child('friends')).$asArray();
 
 return {
     all: function () {
@@ -233,4 +234,4 @@ return {
 //     socialLogin: socialLogin
 //
 //   };
-// });
+});

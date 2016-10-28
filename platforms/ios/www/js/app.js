@@ -8,7 +8,7 @@
 //my fireBase Url
 var firebaseDatabseUrl = "https://lunchmeetup-f6d29.firebaseio.com";
 
-angular.module('starter', ['ionic', 'firebase','angularMoment', 'starter.controllers', 'starter.services', 'ngCordova'])
+angular.module('starter', ['ionic', 'firebase', 'angularMoment', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform,$rootScope,$location,Auth,$ionicLoading) {
   $ionicPlatform.ready(function() {
@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'firebase','angularMoment', 'starter.control
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
   console.log("setting config");
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -137,6 +137,12 @@ angular.module('starter', ['ionic', 'firebase','angularMoment', 'starter.control
         }
     })
 
+    .state('signup', {
+        url: '/maps',
+        templateUrl: 'templates/signup.html'
+
+    })
+
     .state('maps', {
         url: '/maps',
         templateUrl: 'templates/maps.html',
@@ -151,6 +157,6 @@ angular.module('starter', ['ionic', 'firebase','angularMoment', 'starter.control
       })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('splash');
+  $urlRouterProvider.otherwise('login');
 
 });

@@ -3,7 +3,7 @@
 
   <div class="centerDiv">
      <p>Welcome, {{session.email}}</p>
-     <button class="button button-block button-positive" ng-click="logout()">Logout</button>
+     <!-- <button class="button button-block button-positive" ng-click="logout()">Logout</button> -->
   </div>
   <ion-list ng-show="friends">
       <ion-item class="item-icon-left" ng-repeat="friend in friends" type="item-text-wrap" ng-click="openChatWithFriend(friend.id)">
