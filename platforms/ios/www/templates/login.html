@@ -6,10 +6,10 @@
   <form name="loginForm" style="border:none;">
       <div class="list">
               <label class="item item-input item-floating-label">
-                  <span class="input-label">Email </span><input required type="text" placeholder="Email" ng-model="data.email">
+                  <span class="input-label">Email </span><input required type="text" placeholder="Email" ng-model="user.email">
               </label>
               <label class="item item-input item-floating-label">
-                  <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="data.password" ng-minlength="3">
+                  <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="user.pwdForLogin" ng-minlength="3">
               </label>
 
             <ion-toggle class="item item-toggle" toggle-class="toggle-balanced" ng-model="userNameStored">  Remember Me
@@ -23,8 +23,8 @@
       </div>
 
    </form>
-      <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="login()">Login</button>
- 	    <button class="button button-block button-dark" ng-disabled="!loginForm.$valid" ng-click="signUp()">Create Account</button>
+      <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="signIn(user)">Login</button>
+
 
     <div class="centerDiv">
       <button class="button button-positive buttonFullwidth" ng-click="facebookLogin()">Facebook</button>

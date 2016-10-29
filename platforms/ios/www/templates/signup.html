@@ -1,24 +1,25 @@
-<ion-modal-view>
-    <ion-header-bar class="bar bar-header bar-positive">
+<ion-view>
+    <!-- <ion-header-bar class="bar bar-header bar-positive">
         <h1 class="title">Create New Account</h1>
         <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
-    </ion-header-bar>
+    </ion-header-bar> -->
     <ion-content class="padding">
+      <form name="signUpForm" style="border:none;">
         <div class="list">
-          <label class="item item-input">
+          <label class="item item-input item-floating-label">
               <span class="input-label">Display Name</span>
-              <input ng-model="user.displayname" type="text">
+              <input placeholder="Dislay Name" ng-model="user.displayname" type="text">
           </label>
-            <label class="item item-input">
+            <label class="item item-input item-floating-label">
                 <span class="input-label">Email Address</span>
-                <input ng-model="user.email" type="text">
+                <input required placeholder="Email" ng-model="user.email" type="text">
             </label>
-            <label class="item item-input">
+            <label class="item item-input item-floating-label">
                 <span class="input-label">Passsword</span>
-                <input ng-model="user.password" type="password">
+                <input required placeholder="Password" ng-model="user.password" type="password">
             </label>
-
-            <button class="button button-full button-positive" ng-click="signUp(user)">Create</button>
+      </form>
+            <button class="button button-full button-positive" ng-click="createUser(user)">Create</button>
         </div>
 
         <div class="centerDiv">
@@ -27,4 +28,4 @@
           <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
         </div>
     </ion-content>
-</ion-modal-view>
+</ion-view>

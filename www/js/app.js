@@ -13,9 +13,9 @@ function onDeviceReady() {
 //console.log("binding device ready");
 // Registering onDeviceReady callback with deviceready event
 document.addEventListener("deviceready", onDeviceReady, false);
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova','firebase','angularMoment'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$rootScope,$location,$firebaseAuth,$ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -93,7 +93,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     })
   .state('signup', {
        url: '/signup',
-        templateUrl: 'templates/signup.html'
+        templateUrl: 'templates/signup.html',
+        controller:'IonicLogin'
     })
 
     .state('maps', {
