@@ -53,10 +53,9 @@ angular.module('starter.controllers', [])
      }
 })
 
-// LOGIN PAGE CONTROLLER
-.controller('IonicLogin', function($scope, $state, $timeout,$firebaseAuth, $rootScope, IonicLogin, $ionicLoading, $cordovaOauth, $http) {
+// LOGIN PAGE CONTROLLER - Login and Sign Up Functions
+.controller('IonicLogin', function($scope, $state, $timeout, $firebaseAuth, $rootScope, $ionicLoading, $cordovaOauth) {
   console.log('Login Controller Initialized');
-
 
   // // REMOVE THE USER LOGIN INFORMATION WHEN RETURNING TO LOGIN SCREEN
   // $scope.$on('$ionicView.enter', function(e) {
@@ -69,6 +68,7 @@ angular.module('starter.controllers', [])
   // }
   $scope.authObj = $firebaseAuth();
   var firebaseUser = $scope.authObj.$getAuth();
+  var datbaseRef = firebase.database();
   $scope.createUser = function (user) {
       console.log("Create User Function called");
       if (user && user.email && user.password && user.displayname) {
@@ -111,7 +111,7 @@ angular.module('starter.controllers', [])
               user.pwdForLogin
           ).then(function (authData) {
               console.log("Logged in as:" + authData.uid);
-              ref.child("users").child(authData.uid).once('value', function (snapshot) {
+              firebase.database().ref("users").child(authData.uid).once('value', function (snapshot) {
                   var val = snapshot.val();
                   // To Update AngularJS $scope either use $apply or $timeout
                   $scope.$apply(function () {
@@ -138,26 +138,61 @@ angular.module('starter.controllers', [])
   // }
 
   // FACEBOOK LOGIN
+  var fbProvider = new firebase.auth.FacebookAuthProvider();
+  fbProvider.addScope('user_birthday');
+  fbProvider.addScope('email');
+  fbProvider.addScope('public_profile');
+  fbProvider.setCustomParameters({
+      'display': 'popup'
+  });
   $scope.facebookLogin = function() {
-
-       var appID = "1628077107489568"; // PUT YOUR FACEBOOK APP ID HERE
-       var redirectURL = "http://login-oauth-146316.appspot.com/callback" ; // PUT YOUR APP CALLBACK URL HERE
-
-       $cordovaOauth.facebook(appID, ["email"], {redirect_uri: redirectURL})
-            .then(function(result){
-                var access_token = result.access_token;
-
-               $http.get("https://graph.facebook.com/v2.8/me",
-                    { params: {access_token: access_token, fields: "name, email", format: "json" }})
-                        .then(function(user) {
-                        //     alert(JSON.stringify(user));
-                             IonicLogin.socialLogin( user.data.email, user.data.id); // USING ID TO GENERATE A HASH PASSWORD
-                    })
-        },
-          function(error){
-                console.log("Facebook Login Error: " + error);
-        });
-    }
+      firebase.auth().signInWithPopup(fbProvider).then(function(result) {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          alert ("Facebook Login successfully.");
+          $ionicLoading.hide();
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          firebase.database().ref("users/"+ result.public_profile.id).set({
+              email: user.email,
+              displayName: result.public_profile.name,
+              ageRange: result.public_profile.age_range
+          });
+          // ...
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log ("Facebook Login failed." + errorCode);
+        alert("Facebook Login Failed. " + errorMessage);
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        $ionicLoading.hide();
+        // ...
+      });
+  }
+  // $scope.facebookLogin = function() {
+  //
+  //      var appID = "1628077107489568"; // PUT YOUR FACEBOOK APP ID HERE
+  //      var redirectURL = "http://login-oauth-146316.appspot.com/callback" ; // PUT YOUR APP CALLBACK URL HERE
+  //
+  //      $cordovaOauth.facebook(appID, ["email"], {redirect_uri: redirectURL})
+  //           .then(function(result){
+  //               var access_token = result.access_token;
+  //
+  //              $http.get("https://graph.facebook.com/v2.8/me",
+  //                   { params: {access_token: access_token, fields: "name, email", format: "json" }})
+  //                       .then(function(user) {
+  //                       //     alert(JSON.stringify(user));
+  //                            IonicLogin.socialLogin( user.data.email, user.data.id); // USING ID TO GENERATE A HASH PASSWORD
+  //                   })
+  //       },
+  //         function(error){
+  //               console.log("Facebook Login Error: " + error);
+  //       });
+  //   }
 
     // TWITTER LOGIN
     $scope.twitterLogin = function(){

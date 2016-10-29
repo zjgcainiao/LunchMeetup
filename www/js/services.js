@@ -10,7 +10,7 @@ angular.module('starter.services', ['firebase'])
 
 var selectedRoomId;
 
-var ref = firebase.database.ref();
+var ref = firebase.database();
 var chats;
 
 return {
