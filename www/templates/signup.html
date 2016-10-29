@@ -1,0 +1,30 @@
+<ion-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Create New Account</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="list">
+          <label class="item item-input item-floating-label">
+              <span class="input-label">Display Name</span>
+              <input placeholder="Dislay Name" ng-model="user.displayname" type="text">
+          </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Email Address</span>
+                <input required placeholder="Email" ng-model="user.email" type="text">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Passsword</span>
+                <input required placeholder="Password" ng-model="user.password" type="password">
+            </label>
+
+            <button class="button button-full button-positive" ng-click="createUser(user)">Create</button>
+        </div>
+
+        <div class="centerDiv">
+          <button class="button button-positive buttonFullwidth" ng-click="facebookLogin()">Facebook</button>
+          <!-- <button class="button button-calm buttonFullwidth" ng-click="twitterLogin()">Twitter</button> -->
+          <button class="button button-assertive buttonFullwidth" ng-click="googleLogin()">Google+</button>
+        </div>
+    </ion-content>
+</ion-view>

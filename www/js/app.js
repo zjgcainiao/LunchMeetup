@@ -5,6 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+var firebaseUrl = "https://lunchmeetup-f6d29.firebaseio.com/";
+
+function onDeviceReady() {
+    angular.bootstrap(document, ["starter"]);
+}
+//console.log("binding device ready");
+// Registering onDeviceReady callback with deviceready event
+document.addEventListener("deviceready", onDeviceReady, false);
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
@@ -53,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   .state('tab.chats', {
-      url: '/chats',
+      url: '/chats/:roomId',
       views: {
         'tab-chats': {
           templateUrl: 'templates/tab-chats.html',
@@ -82,6 +90,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
        url: '/login',
         templateUrl: 'templates/login.html',
         controller: 'IonicLogin'
+    })
+  .state('signup', {
+       url: '/signup',
+        templateUrl: 'templates/signup.html'
     })
 
     .state('maps', {
