@@ -7444,7 +7444,7 @@ ionic.scroll = {
 
             if ( scrollTop > 0) {
               if (ionic.Platform.isIOS()) {
-                //just shrank scroll view, give it some breathing room before scrolling
+                //just shrank scroll view, give it some breathing friend before scrolling
                 setTimeout(function(){
                   ionic.tap.cloneFocusedInput(container, self);
                   self.scrollBy(0, scrollTop, true);

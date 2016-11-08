@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var firebaseUrl = "https://lunchmeetup-f6d29.firebaseio.com/";
+// var firebaseUrl = "https://lunchmeetup-f6d29.firebaseio.com/";
 
 function onDeviceReady() {
     angular.bootstrap(document, ["starter"]);
@@ -15,7 +15,7 @@ function onDeviceReady() {
 document.addEventListener("deviceready", onDeviceReady, false);
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova','firebase','angularMoment'])
 
-.run(function($ionicPlatform,$rootScope,$location,$firebaseAuth,$ionicLoading) {
+.run(function($ionicPlatform, $rootScope, $location, $firebaseAuth, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -50,18 +50,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.events', {
+    url: '/events',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-events': {
+        templateUrl: 'templates/tab-events.html',
+        controller: 'EventsCtrl'
       }
     }
   })
 
   .state('tab.chats', {
-      url: '/chats/:roomId',
+      url: '/chats/:friendId',
       views: {
         'tab-chats': {
           templateUrl: 'templates/tab-chats.html',

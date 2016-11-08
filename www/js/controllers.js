@@ -1,24 +1,26 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['firebase'])
 
 
-// HOME PAGE CONTROLLER
-.controller('DashCtrl', function($scope, Rooms, Chats, IonicLogin) {
+// HOME PAGE - Events CONTROLLER
+.controller('EventsCtrl', function($scope, Friends, Chats) {
 
-  console.log("Rooms Controller initialized");
-  $scope.rooms = Rooms.all();
+  console.log("Events Controller initialized");
+  console.log("current user is "+firebase.auth().currentUser.displayname());
+  var currentUser = firebase.auth().currentUser.displayname();
+  $scope.friends = Friends.all();
 
-  $scope.openChatRoom = function (roomId) {
+  $scope.openChatFriend = function (friendId) {
       $state.go('tab.chats', {
-          roomId: roomId
+          friendId: friendId
       });
   }
-  $scope.$on('$ionicView.enter', function(e) {
-      $scope.session = JSON.parse( window.localStorage['session']) ; // read the session information
-  });
-
-   $scope.logout = function(){
-       IonicLogin.logout($scope.session.email);
-  }
+  // $scope.$on('$ionicView.enter', function(e) {
+  //     $scope.session = JSON.parse( window.localStorage['session']) ; // read the session information
+  // });
+  //
+  //  $scope.logout = function(){
+  //      IonicLogin.logout($scope.session.email);
+  // }
 })
 
 .controller('SplashController', function ($scope, $state, $window, $http){
@@ -40,7 +42,7 @@ angular.module('starter.controllers', [])
                         $state.go('home');
                    }
                    else{
-                       $state.go('tab.dash');
+                       $state.go('tab.account');
                   }
                 })
                 .error(function(response) {
@@ -54,7 +56,7 @@ angular.module('starter.controllers', [])
 })
 
 // LOGIN PAGE CONTROLLER - Login and Sign Up Functions
-.controller('IonicLogin', function($scope, $state, $timeout, $firebaseAuth, $rootScope, $ionicLoading, $cordovaOauth) {
+.controller('IonicLogin', function($scope, $state, $timeout, $firebaseAuth, $rootScope, $ionicLoading) {
   console.log('Login Controller Initialized');
 
   // // REMOVE THE USER LOGIN INFORMATION WHEN RETURNING TO LOGIN SCREEN
@@ -80,13 +82,15 @@ angular.module('starter.controllers', [])
             user.email,
             user.password
           ).then(function (firebaseUser) {
-              alert("User "+ firebaseUser.uid + " created successfully!");
+              alert("User "+ user.displayname + " created successfully!");
 
               firebase.database().ref("users").child(firebaseUser.uid).set({
                   email: user.email,
-                  displayName: user.displayname
+                  displayName: user.displayname,
+                  photoURL: null,
+                  ageRange: null
               });
-              $timeout(function() { $state.go('tab.dash');});
+              $timeout(function() { $state.go('tab.events');});
               $ionicLoading.hide();
               // $scope.modal.hide();
 
@@ -100,7 +104,7 @@ angular.module('starter.controllers', [])
           alert("Please fill all details");
   }
 
-  $scope.signIn = function (user) {
+  $rootScope.signIn = function (user) {
 
       if (user && user.email && user.pwdForLogin) {
           $ionicLoading.show({
@@ -115,11 +119,11 @@ angular.module('starter.controllers', [])
                   var val = snapshot.val();
                   // To Update AngularJS $scope either use $apply or $timeout
                   $scope.$apply(function () {
-                      $rootScope.displayName = val;
+                      $rootScope.displayName = snapshot.val();
                   });
               });
               $ionicLoading.hide();
-              $state.go('tab.dash');
+              $state.go('tab.events');
           }).catch(function (error) {
               alert("Authentication failed:" + error.message);
               $ionicLoading.hide();
@@ -127,6 +131,14 @@ angular.module('starter.controllers', [])
       } else
           alert("Please enter email and password both");
   }
+
+  $rootScope.logout = function(){
+      firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+      alert ("User Has successfully logout")
+    }, function(error) {
+      // An error happened.
+  })};
   // // LOGIN FUNCTION
   // $scope.login = function(){
   //      IonicLogin.login($scope.data.email, $scope.data.password);
@@ -145,7 +157,8 @@ angular.module('starter.controllers', [])
   fbProvider.setCustomParameters({
       'display': 'popup'
   });
-  $scope.facebookLogin = function() {
+  //make facebooklogin available throughtout the
+  $rootScope.facebookLogin = function() {
       firebase.auth().signInWithPopup(fbProvider).then(function(result) {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           alert ("Facebook Login successfully.");
@@ -155,8 +168,10 @@ angular.module('starter.controllers', [])
           var user = result.user;
           firebase.database().ref("users/"+ result.public_profile.id).set({
               email: user.email,
-              displayName: result.public_profile.name,
-              ageRange: result.public_profile.age_range
+              displayname: result.public_profile.name,
+              ageRange: result.public_profile.age_range,
+              photoURL: result.public_profile.CoverPhoto,
+              timezone: result.public_profile.timezone
           });
           // ...
       }).catch(function(error) {
@@ -255,19 +270,19 @@ angular.module('starter.controllers', [])
 })
 
 // CHAT CONTROLLER
-.controller('ChatsCtrl', function($scope, Chats,$state, $stateParams, IonicLogin) {
+.controller('ChatsCtrl', function($scope, Chats, $state, $stateParams) {
 
   $scope.IM = {
       textMessage: ""
   };
 
-  Chats.selectRoom($state.params.roomId);
+  Chats.selectFriend($state.params.friendId);
 
-  var roomName = Chats.getSelectedRoomName();
+  var friendName = Chats.getSelectedFriendName();
 
-  // Fetching Chat Records only if a Room is Selected
-  if (roomName) {
-      $scope.roomName = " - " + roomName;
+  // Fetching Chat Records only if a Friend is Selected
+  if (friendName) {
+      $scope.friendName = " - " + friendName;
       $scope.chats = Chats.all();
   }
 
@@ -283,8 +298,15 @@ angular.module('starter.controllers', [])
 })
 
 // ACCOUNT SETTINGS CONTROLLER
-.controller('AccountCtrl', function($scope) {
-
+.controller('AccountCtrl', function($scope,$firebaseAuth) {
+  var user = firebase.auth().currentUser();
+  var userId=user.uid;
+  $scope.currentUser = user;
+  // var name, email, displayname, uid;
+  //assign a profileData to monitor the firebase database's userProfile
+  if (user && userId != null) {
+    return firebase.database().ref('users/'+userId).once('value').then(function(snapshot){$scope.profileData=snapshot.val()});
+  }
 })
 
 // MAP CONTROLLER

@@ -3113,7 +3113,7 @@ function($ionicModal, $ionicPosition, $document, $window) {
     }
 
     // If the popover when popped down stretches past bottom of screen,
-    // make it pop up if there's room above
+    // make it pop up if there's friend above
     if (buttonOffset.top + buttonOffset.height + popoverHeight > bodyHeight &&
         buttonOffset.top - popoverHeight > 0) {
       popoverCSS.top = buttonOffset.top - popoverHeight;

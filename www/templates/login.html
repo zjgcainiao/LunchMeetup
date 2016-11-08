@@ -4,24 +4,27 @@
   <div class="login-div">
 
   <form name="loginForm" style="border:none;">
-      <div class="list">
+      <ul class="list">
+          <li>
               <label class="item item-input item-floating-label">
                   <span class="input-label">Email </span><input required type="email" placeholder="Email" ng-model="user.email">
               </label>
+          </li>
+          <li >
               <label class="item item-input item-floating-label">
                   <span class="input-label">Password</span><input required type="password" placeholder="Password" ng-model="user.pwdForLogin" ng-minlength="3">
               </label>
-
-            <ion-toggle class="item item-toggle" toggle-class="toggle-balanced" ng-model="userNameStored">  Remember Me
-                  <!-- <label class="toggle toggle-balanced">
-                     <input type="checkbox">
-                        <div class="track">
-                          <div class="handle"></div>
-                        </div>
-                  </label> -->
-            </ion-toggle>
-      </div>
-
+          </li>
+  
+      </ul>
+      <ion-toggle class="item item-toggle" toggle-class="toggle-balanced" ng-model="userNameStored" style="border:none;">  Remember Me
+            <!-- <label class="toggle toggle-balanced">
+               <input type="checkbox">
+                  <div class="track">
+                    <div class="handle"></div>
+                  </div>
+            </label> -->
+      </ion-toggle>
    </form>
       <button class="button button-block button-calm" ng-disabled="!loginForm.$valid" ng-click="signIn(user)">Login</button>
 

@@ -8217,7 +8217,7 @@ input:checked + .checkbox-icon:after {
     cursor: pointer; }
 
 .item-radio .item-content {
-  /* give some room to the right for the checkmark icon */
+  /* give some friend to the right for the checkmark icon */
   padding-right: 64px; }
 
 .item-radio .radio-icon {

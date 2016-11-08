@@ -1,14 +1,17 @@
 <ion-view view-title="Settings" cache-value="true">
   <ion-content class='padding'>
  <button class="button icon icon-right ion-chevron-right" ui-sref="maps">See Maps</button>
+ <div class="centerDiv">
 
+    <button class="button button-block button-positive" ng-click="logout()">Logout</button>
+ </div>
     <div class="list card">
         <div class="item item-avatar">
             <img ng-src="{{profileData.picture.data.url}}">
-            <h2>{{profileData.name}}</h2>
-            <p>{{profileData.id}}</p>
+            <h2>{{profileData.email}}</h2>
+            <p>{{profileData.uid}}</p>
         </div>
-        <a href="#" class="item item-icon-left">
+        <!-- <a href="#" class="item item-icon-left">
             <i class="icon ion-earth"></i>
             {{profileData.website}}
         </a>
@@ -19,7 +22,7 @@
         <a href="#" class="item item-icon-left">
             <i class="icon ion-heart"></i>
             {{profileData.relationship_status}}
-        </a>
+        </a> -->
     </div>
   </ion-content>
 </ion-view>

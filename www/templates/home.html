@@ -1,15 +1,40 @@
 <ion-view view-tite="Meet Me Up" hide-back-button="true" can-swipe-back="false">
-<ion-content class="home-page-content">
-  <div class="tabs">
-    <div class="col-sm-6 center-block">
-        <a class="btn btn-primary" ui-sref="login"> Sign In</a>
+<ion-content>
+  <video playsinline autoplay muted loop poster="../img/video_background.png" id="bgvid">
+    <source src="../img/video_background.png" type="video/mp4">
+  </video>
+  <div class="tabs-strpied tabs-background-positive tabs-color-light">
+    <div class ="tabs">
+        <a class="tab-item" ui-sref="login"> <strong> Sign In</strong></a>
+
+        <a class="tab-item" ui-sref="signup"><strong> Sign Up</strong></a>
     </div>
-    <div class="col-sm-6 center-block" >
-        <a class="btn btn-primary" ui-sref="signup"> Sign Up</a>
-    </div>
-  </div >
+  </div>
+  <div　
   </ion-content>
 
-
+<!-- <script>
+    var vid = document.getElementById("bgvid");
+    pauseButton = document.getElementByClassName("btn-primary");
+    function vidFade() {
+        vid.classList.add("stopfade");
+    }
+    vid.addEventListener('ended', function() {
+        // only functional if "loop" is removed
+         vid.pause();
+    	// to capture IE10
+    	vidFade();
+    });
+    pauseButton.addEventListener("click", function() {
+        vid.classList.toggle("stopfade");
+    	if (vid.paused) {
+    vid.play();
+    		pauseButton.innerHTML = "Pause";
+    	} else {
+            vid.pause();
+            pauseButton.innerHTML = "Paused";
+    	}
+    })
+</script> -->
 
 </ion-view>
